@@ -11,18 +11,23 @@ interface LoginButtonProps extends React.ComponentPropsWithoutRef<"button"> {
 }
 
 export const LoginButton = (props: LoginButtonProps): JSX.Element => {
-  const { onLoginCallback, children, ...rest } = props;
+  const { onLoginCallback, ...rest } = props;
 
   const onClick = () => {
-    if (rest?.rdu && typeof rest?.rdu === "string" ) {
+    if (rest?.rdu && typeof rest?.rdu === "string") {
       window.location.href = rest?.rdu;
     } else if (rest?.cbu) {
-      const windowObj = window.open(
+      const openedWindow = window.open(
         rest?.cbu,
         "_blank",
         "width=400,height=500,left=100,top=200"
       );
-      windowObj?.addEventListener("unload", onLoginCallback);
+      var loop = setInterval(function () {
+        if (openedWindow?.closed) {
+          clearInterval(loop);
+          onLoginCallback();
+        }
+      }, 250);
     } else {
       throw new Error(
         "Please provide either a callback url or redirect URL to the component"
