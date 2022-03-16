@@ -1,4 +1,6 @@
 interface Props {
+  /*gooddollar wallet link to redirect to*/
+  redirectLink?: string;
   /* v: name of vendor */
   v: string;
   /* web: vendor url */
@@ -13,8 +15,17 @@ interface Props {
   r: Array<string>;
 }
 
-export const createLoginLink = ({ v, web, id, cbu, rdu, r }: Props) => {
-  const websiteLink = "http://localhost:3000/AppNavigation/LoginRedirect";
+export const createLoginLink = ({
+  v,
+  web,
+  id,
+  cbu,
+  rdu,
+  r,
+  redirectLink,
+}: Props) => {
+  const websiteLink =
+    redirectLink ?? "http://wallet.gooddollar.org/AppNavigation/LoginRedirect";
   const objectToEncode = { v, web, id, cbu, rdu, r };
   if (!cbu && !rdu) {
     throw new Error("Please provide either a cbu or rdu");
