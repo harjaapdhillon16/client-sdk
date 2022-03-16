@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { parseLoginLink } from "./loginLinkUtils";
 
-interface LoginButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+export interface LoginProps extends React.ComponentPropsWithoutRef<"button"> {
   /* Gooddollar link */
   gooddollarlink: string;
   /* Login callback function */
@@ -12,7 +12,7 @@ interface LoginButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   cbu?: string;
 }
 
-export const useLogin = (props: LoginButtonProps): (() => void) => {
+export const useLogin = (props: LoginProps): (() => void) => {
   const { onLoginCallback, ...rest } = props;
 
   const onClick = () => {
