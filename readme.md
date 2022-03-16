@@ -8,10 +8,11 @@ This is the gooddollar client sdk for integrating login into gooddollar in your 
  - parseLoginResponse to verify if the login was successful and verified
  - useLogin is a hook that can be used instead of button to integrate login with gooddollar on your website
 
-## Object schema for loginLink 
+## Object schema for createLoginLink 
 
 | Property Name | Purpose | Mandatory/Optional | Type |
 | --- | --- | --- |  --- |
+| redirectLink | gooddollar wallet link to redirect to | Optional | String |
 | v | name of the vendor | Mandatory | String |
 | web | web link for vendor | Mandatory | String |
 | id | wallet address for vendor | Mandatory | String |
