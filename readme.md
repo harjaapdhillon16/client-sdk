@@ -1,21 +1,17 @@
 # GoodDollar Client SDK
-
 This is the gooddollar client sdk for integrating login into gooddollar in your website
-
 - [Example App](https://gooddollar.netlify.app/) to test the functionality
 
 ## SDK Utilities
-
-- { createLoginLink } to generate login link to redirect to the gooddollar wallet
-- { LoginButton } to place a login button on your page to integrate login with gooddollar on your website
-- { parseLoginResponse } to verify if the login was successful and verified
-- { useLogin } feature is a hook that can be used instead of button to integrate login with gooddollar on your website
+ - { createLoginLink } to generate login link to redirect to the gooddollar wallet 
+ - { LoginButton } to place a login button on your page to integrate login with gooddollar on your website
+ - { parseLoginResponse } to verify if the login was successful and verified
+ - { useLogin } feature is a hook that can be used instead of button to integrate login with gooddollar on your website
 
 ## example login with hook
-
 ```js
 import {
-  LoginButton,
+  useLogin,
   createLoginLink,
   parseLoginResponse,
 } from "client-sdk-gooddollar";
@@ -30,7 +26,7 @@ const App() {
   });
 
   const loginCallBack = async (data) => {
-    //to check if login response is valid or not
+    //to check if login response is valid or not 
     parseLoginResponse(data)
   }
 
@@ -49,9 +45,8 @@ const App() {
 ```
 
 ## example login with button
-
 ```js
-
+import {useState} from 'react';
 import {
   LoginButton,
   createLoginLink,
@@ -66,13 +61,24 @@ function App() {
     r: ["mobile", "location", "email", "name"],
     rdu: "https://gooddollar.netlify.app",
   });
+
+  const [gooddollarData, setGooddollarData] = useState({});
+
   return (
     <div className="App">
-    {(
+      <header className="App-header">
+        <img
+          style={{ width: 200, height: 50, objectFit: "contain" }}
+          src="https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img/https://www.gooddollar.org/wp-content/uploads/2020/05/logo.png"
+          className="App-logo"
+          alt="logo"
+        />
+        {Object.keys(gooddollarData).length === 0 ? (
+          <>
             <LoginButton
               onLoginCallback={async (data) => {
-                //to check if login response is valid or not
-                parseLoginResponse(data)
+              //to check if login response is valid or not 
+              parseLoginResponse(data)
               }}
               gooddollarlink={gooddollarLink}
               style={{ fontSize: 20, padding: 20 }}
@@ -80,6 +86,7 @@ function App() {
             >
               Loggin With GOODDOLLAR
             </LoginButton>
+          </>
         ) : (
           <div>
             <p>Logged In</p>
@@ -95,6 +102,7 @@ function App() {
             </button>
           </div>
         )}
+      </header>
     </div>
   );
 }
