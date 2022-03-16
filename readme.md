@@ -79,6 +79,7 @@ function App() {
               onLoginCallback={async (data) => {
               //to check if login response is valid or not 
               parseLoginResponse(data)
+              setGooddollarData(data)
               }}
               gooddollarlink={gooddollarLink}
               style={{ fontSize: 20, padding: 20 }}
