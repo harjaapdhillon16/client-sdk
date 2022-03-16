@@ -8,6 +8,32 @@ This is the gooddollar client sdk for integrating login into gooddollar in your 
  - parseLoginResponse to verify if the login was successful and verified
  - useLogin is a hook that can be used instead of button to integrate login with gooddollar on your website
 
+### Object schema for loginLink 
+ Property Name | Purpose | Mandatory/Optional | Type |
+| --- | --- | --- |
+| v | name of the vendor | Mandatory | String |
+| web | web link for vendor | Mandatory | String |
+| id | wallet address for vendor | Mandatory | String |
+| r | array of information ex.['mobile','location'] | Mandatory | array |
+| cbu | Callback URL | provide either rdu or cbu | String |
+| rbu | Redirect URL | provide either rdu or cbu | String |
+
+### Object schema for useLogin 
+ Property Name | Purpose | Mandatory/Optional | Type |
+| --- | --- | --- |
+| gooddollarlink | wallet link returned by createLoginLink | Mandatory | String |
+| cbu | Callback URL | provide either rdu or cbu | String |
+| rbu | Redirect URL | provide either rdu or cbu | String |
+| onLoginCallback | Login Call back | Function that has the data returned by wallet as the argument | Function |
+
+### Props for LoginButton 
+ Prop Name | Purpose | Mandatory/Optional | Type |
+| --- | --- | --- |
+| gooddollarlink | wallet link returned by createLoginLink | Mandatory | String |
+| cbu | Callback URL | provide either rdu or cbu | String |
+| rbu | Redirect URL | provide either rdu or cbu | String |
+| onLoginCallback | Login Call back | Function that has the data returned by wallet as the argument | Function |
+
 ## example login with hook
 ```js
 import {
