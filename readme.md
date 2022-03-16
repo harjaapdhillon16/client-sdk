@@ -66,13 +66,6 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img
-          style={{ width: 200, height: 50, objectFit: "contain" }}
-          src="https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img/https://www.gooddollar.org/wp-content/uploads/2020/05/logo.png"
-          className="App-logo"
-          alt="logo"
-        />
         {Object.keys(gooddollarData).length === 0 ? (
           <>
             <LoginButton
@@ -103,7 +96,6 @@ function App() {
             </button>
           </div>
         )}
-      </header>
     </div>
   );
 }
