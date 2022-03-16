@@ -1,6 +1,6 @@
 {
   "name": "client-sdk-gooddollar",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "Login SDK for Gooddollar wallet .",
   "scripts": {
     "rollup": "rollup -c --context window",

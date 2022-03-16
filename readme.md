@@ -27,7 +27,7 @@ This is the gooddollar client sdk for integrating login into gooddollar in your 
 | gooddollarlink | wallet link returned by createLoginLink | Mandatory | String |
 | cbu | Callback URL | provide either rdu or cbu | String |
 | rbu | Redirect URL | provide either rdu or cbu | String |
-| onLoginCallback | Login Call back | Function that has the data returned by wallet as the argument | Function |
+| onLoginCallback | Function that has the data returned by wallet as the first argument | Mandatory | Function |
 
 ## Props for LoginButton
 
@@ -36,7 +36,7 @@ This is the gooddollar client sdk for integrating login into gooddollar in your 
 | gooddollarlink | wallet link returned by createLoginLink | Mandatory | String |
 | cbu | Callback URL | provide either rdu or cbu | String |
 | rbu | Redirect URL | provide either rdu or cbu | String |
-| onLoginCallback | Login Call back | Function that has the data returned by wallet as the argument | Function |
+| onLoginCallback | Function that has the data returned by wallet as the first argument | Mandatory | Function |
 
 ## example login with hook
 ```js
