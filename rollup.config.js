@@ -9,7 +9,7 @@ const packageJson = require("./package.json");
 export default [
   {
     input: "src/index.ts",
-    external: ["react", "react-dom","web3"],
+    external: ["react", "react-dom","web3",'@gooddollar/goodprotocol'],
     output: [
       {
         file: packageJson.main,
