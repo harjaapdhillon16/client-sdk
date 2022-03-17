@@ -7,6 +7,7 @@ it("parseLoginResponse method should return the correct value", async () => {
   );
   expect(parseLoginObject).toStrictEqual({
     ...parsedResult,
+    isWhitelisted:true,
     verifiedResponse: true,
   });
 }, 10000);
@@ -18,7 +19,7 @@ it("parseLoginResponse method should return the verfiedReponse false when given 
   });
   expect(parseLoginObject).toStrictEqual({
     ...parsedResult,
-    a: "0x9E6Ea049A281F513a2BAbb106AF1E023FEEeCfA",
+    walletAddrress:"0x9E6Ea049A281F513a2BAbb106AF1E023FEEeCfA",
     verifiedResponse: false,
   });
 }, 10000);

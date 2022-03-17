@@ -24,17 +24,18 @@ interface ResponseType {
   error?: string;
 }
 
-const transformObject = (res: ResponseType) => ({
-  walletAddrress: res.a,
-  isAddressWhitelisted: res.v,
-  location: res.I,
-  fullName: res.n,
-  email: res.e,
-  mobile: res.m,
-  nonce: res.nonce,
-});
-
 export const parseLoginResponse = async (response: ResponseType) => {
+  
+  const transformObject = (res: ResponseType) => ({
+    walletAddrress: res.a,
+    isAddressWhitelisted: res.v,
+    location: res.I,
+    fullName: res.n,
+    email: res.e,
+    mobile: res.m,
+    nonce: res.nonce,
+  });
+
   if (response?.error) {
     return response;
   }
@@ -65,6 +66,7 @@ export const parseLoginResponse = async (response: ResponseType) => {
           verifiedResponse: true,
         };
       } catch (e) {
+        console.log(e)
         return { ...transformObject(response), verifiedResponse: false };
       }
     } else {
