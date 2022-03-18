@@ -45,12 +45,9 @@ export const parseLoginResponse = async (response: ResponseType) => {
     const web3Instance = new Web3(
       new Web3.providers.HttpProvider("https://rpc.fuse.io/")
     );
-    const userRecoveredWalletAddress = web3Instance.eth.accounts.recover({
-      messageHash: sig.messageHash,
-      v: sig.v,
-      r: sig.r,
-      s: sig.s,
-    });
+    const dataToRecover = {...response};
+    delete dataToRecover.sig;
+    const userRecoveredWalletAddress = web3Instance.eth.accounts.recover(JSON.stringify(dataToRecover),sig);
     if (userRecoveredWalletAddress === a) {
       const identityContract = new web3Instance.eth.Contract(
         IdentityABI.abi as any,
