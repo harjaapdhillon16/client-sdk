@@ -28,10 +28,10 @@ export const parseLoginResponse = async (response: ResponseType) => {
   const transformObject = (res: ResponseType) => ({
     walletAddrress: { value: res.a.value, isVerified: false },
     isAddressWhitelisted: { value: res.v.value, isVerified: false },
-    ...[res?.I ? { location: { value: res.I.value, isVerified: false } } : {}],
-    ...[res?.n ? { fullName: { value: res.n.value, isVerified: false } } : {}],
-    ...[res?.m ? { mobile: { value: res.m.value, isVerified: false } } : {}],
-    ...[res?.e ? { email: { value: res.e.value, isVerified: false } } : {}],
+    ...(res?.I?.value ? { location: { value: res.I.value, isVerified: false } } : {}),
+    ...(res?.n?.value ? { fullName: { value: res.n.value, isVerified: false } } : {}),
+    ...(res?.m?.value ? { mobile: { value: res.m.value, isVerified: false } } : {}),
+    ...(res?.e?.value ? { email: { value: res.e.value, isVerified: false } } : {}),
   });
 
   if (response?.error) {
@@ -57,7 +57,7 @@ export const parseLoginResponse = async (response: ResponseType) => {
       );
       try {
         const isWhitelisted =
-          v && (await identityContract.methods.isWhitelisted(a).call());
+          v.value && (await identityContract.methods.isWhitelisted(a.value).call());
         return {
           ...transformObject(response),
           isWhitelisted,

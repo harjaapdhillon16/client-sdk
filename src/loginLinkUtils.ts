@@ -1,4 +1,4 @@
-type DataToRequest = "mobile" | "email" | "location" | "name";
+export type DataToRequest = "mobile" | "email" | "location" | "name";
 
 interface Props {
   /*gooddollar wallet link to redirect to*/
