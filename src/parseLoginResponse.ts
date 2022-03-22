@@ -16,6 +16,8 @@ interface ResponseType {
   e?: { value: string; attestation: string };
   //Mobile
   m?: { value: string; attestation: string };
+   //Avatar 
+  av?: { value: string; attestation: string };
   //Timestamp of response
   nonce: { value: number; attestation: string };
   //Signed object
@@ -29,6 +31,7 @@ export const parseLoginResponse = async (response: ResponseType) => {
     walletAddrress: { value: res.a.value, isVerified: false },
     isAddressWhitelisted: { value: res.v.value, isVerified: false },
     ...(res?.I?.value ? { location: { value: res.I.value, isVerified: false } } : {}),
+    ...(res?.av?.value ? { avatar: { value: res.av.value, isVerified: false } } : {}),
     ...(res?.n?.value ? { fullName: { value: res.n.value, isVerified: false } } : {}),
     ...(res?.m?.value ? { mobile: { value: res.m.value, isVerified: false } } : {}),
     ...(res?.e?.value ? { email: { value: res.e.value, isVerified: false } } : {}),
