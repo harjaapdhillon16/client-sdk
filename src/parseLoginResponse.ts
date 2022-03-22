@@ -9,13 +9,13 @@ interface ResponseType {
   //Is address whitelisted
   v: { value: boolean; attestation: string };
   //Location i.e Country
-  I: { value: string; attestation: string };
+  I?: { value: string; attestation: string };
   // Full Name
-  n: { value: string; attestation: string };
+  n?: { value: string; attestation: string };
   //Email
-  e: { value: string; attestation: string };
+  e?: { value: string; attestation: string };
   //Mobile
-  m: { value: string; attestation: string };
+  m?: { value: string; attestation: string };
   //Timestamp of response
   nonce: { value: number; attestation: string };
   //Signed object
@@ -26,13 +26,12 @@ interface ResponseType {
 
 export const parseLoginResponse = async (response: ResponseType) => {
   const transformObject = (res: ResponseType) => ({
-    walletAddrress: { value: res.a, isVerified: false },
-    isAddressWhitelisted: { value: res.v, isVerified: false },
-    location: { value: res.I, isVerified: false },
-    fullName: { value: res.n, isVerified: false },
-    email: { value: res.e, isVerified: false },
-    mobile: { value: res.m, isVerified: false },
-    nonce: { value: res.n, isVerified: false },
+    walletAddrress: { value: res.a.value, isVerified: false },
+    isAddressWhitelisted: { value: res.v.value, isVerified: false },
+    ...[res?.I ? { location: { value: res.I.value, isVerified: false } } : {}],
+    ...[res?.n ? { fullName: { value: res.n.value, isVerified: false } } : {}],
+    ...[res?.m ? { mobile: { value: res.m.value, isVerified: false } } : {}],
+    ...[res?.e ? { email: { value: res.e.value, isVerified: false } } : {}],
   });
 
   if (response?.error) {
