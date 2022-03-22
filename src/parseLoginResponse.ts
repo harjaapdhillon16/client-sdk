@@ -5,19 +5,19 @@ import { env } from "process";
 
 interface ResponseType {
   //Wallet address
-  a: string;
+  a: { value: string; attestation: string };
   //Is address whitelisted
-  v: boolean;
+  v: { value: boolean; attestation: string };
   //Location i.e Country
-  I: string;
+  I: { value: string; attestation: string };
   // Full Name
-  n: string;
+  n: { value: string; attestation: string };
   //Email
-  e: string;
+  e: { value: string; attestation: string };
   //Mobile
-  m: string;
+  m: { value: string; attestation: string };
   //Timestamp of response
-  nonce: number;
+  nonce: { value: number; attestation: string };
   //Signed object
   sig: any;
   //Error
@@ -25,34 +25,36 @@ interface ResponseType {
 }
 
 export const parseLoginResponse = async (response: ResponseType) => {
-  
   const transformObject = (res: ResponseType) => ({
-    walletAddrress: res.a,
-    isAddressWhitelisted: res.v,
-    location: res.I,
-    fullName: res.n,
-    email: res.e,
-    mobile: res.m,
-    nonce: res.nonce,
+    walletAddrress: { value: res.a, isVerified: false },
+    isAddressWhitelisted: { value: res.v, isVerified: false },
+    location: { value: res.I, isVerified: false },
+    fullName: { value: res.n, isVerified: false },
+    email: { value: res.e, isVerified: false },
+    mobile: { value: res.m, isVerified: false },
+    nonce: { value: res.n, isVerified: false },
   });
 
   if (response?.error) {
     return response;
   }
   const { sig, a, nonce, v } = response;
-  const nonceNotToOld = Date.now() - nonce >= 300000;
+  const nonceNotToOld = Date.now() - nonce.value >= 300000;
   if (!nonceNotToOld) {
     const web3Instance = new Web3(
       new Web3.providers.HttpProvider("https://rpc.fuse.io/")
     );
-    const dataToRecover = {...response};
+    const dataToRecover = { ...response };
     delete dataToRecover.sig;
-    const userRecoveredWalletAddress = web3Instance.eth.accounts.recover(JSON.stringify(dataToRecover),sig);
-    if (userRecoveredWalletAddress === a) {
+    const userRecoveredWalletAddress = web3Instance.eth.accounts.recover(
+      JSON.stringify(dataToRecover),
+      sig
+    );
+    if (userRecoveredWalletAddress === a.value) {
       const identityContract = new web3Instance.eth.Contract(
         IdentityABI.abi as any,
         (ContractsAddress as any)[env?.REACT_APP_NETWORK ?? "fuse"].Identity,
-        { from: a }
+        { from: a.value }
       );
       try {
         const isWhitelisted =
@@ -63,7 +65,7 @@ export const parseLoginResponse = async (response: ResponseType) => {
           verifiedResponse: true,
         };
       } catch (e) {
-        console.log(e)
+        console.log(e);
         return { ...transformObject(response), verifiedResponse: false };
       }
     } else {
